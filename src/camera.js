@@ -1,4 +1,5 @@
 import { CameraView, useCameraPermissions } from "expo-camera";
+import { createEvento } from "./axios/api";
 import { useRef, useState } from "react";
 import {
   Button,
@@ -8,6 +9,7 @@ import {
   View,
   Modal,
   Image,
+  Alert,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -34,6 +36,24 @@ export default function Cam() {
       const data = await camRef.current.takePictureAsync();
       setCapturedPhoto(data.uri);
       setOpen(true);
+
+      //simular um formulario
+      const form = {
+        nome: "Evento teste",
+        descricao: "Evento teste image mobile",
+        data_hora: "2025-09-03 09:00:00",
+        local: "Franca",
+        fk_id_organizador:1
+      }
+      try{
+        const response = await createEvento(form, data.uri)
+        console.log("Evento criado", response.data)
+        Alert.alert(response.data.message)
+      }catch (error){
+        console.log("Error", error.response.data.error)
+        Alert.alert(error.response.data.error)
+      }
+
     }
   }
 
