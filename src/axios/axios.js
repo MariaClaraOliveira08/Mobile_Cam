@@ -11,7 +11,10 @@ const api = axios.create({ //api externa que precisa de autenticação
 });
 
 const sheets = {
-    toggleLED: (stateLED) => api.post("botaoled/data", stateLED)
+    // toggleLED: (stateLED) => api.post("botaoled/data", stateLED)
+    toggleLED: (stateLED) => api.post("botaoalarme/data", stateLED)
+
+    
 }
 
 export default sheets;
